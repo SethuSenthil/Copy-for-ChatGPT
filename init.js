@@ -31,7 +31,7 @@
       const chatbubbles = chatContainer.querySelectorAll('main.w-full .border-b');
       if (chatbubbles.length % 2 === 0) {
         //if last chat is from bot
-        const lastChatBubble = chatbubbles.at(-1);
+        const lastChatBubble = chatbubbles[chatbubbles.length - 1];
         const text = lastChatBubble.querySelector('.markdown').innerText
         copyToClipboard(text);
       }
