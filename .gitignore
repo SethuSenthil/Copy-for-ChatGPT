@@ -1,7 +1,6 @@
 ### AL ###
 #Template for AL projects for Dynamics 365 Business Central
 #launch.json folder
-.vscode/
 #Cache folder
 .alcache/
 #Symbols folder
@@ -20,3 +19,6 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+# Ignore Mac DS_Store files
+.DS_Store
+**/.DS_Store

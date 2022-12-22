@@ -8,7 +8,7 @@
         {
             "js" : ["init.js"],
             "css": ["styles.css"],
-            "matches" : ["https://chat.openai.com/chat"]
+            "matches" : ["https://chat.openai.com/*"]
         }
     ]
   }
