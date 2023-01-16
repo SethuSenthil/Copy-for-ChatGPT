@@ -1,20 +1,21 @@
 # Copy for ChatGPT
-The purpose of this extention is to copy output given from ChatGPT with just a click of a button or through a keyboard command (CMD+K on Mac or CTRL+K on Windows)
+The purpose of this extension is to copy output given from ChatGPT with just a click of a button or through a keyboard command (CMD+K on Mac or CTRL+K on Windows).
+
+BETA FEATURE: This extension is testing the ability to autopopulate and traverse the chat like the command line using arrow keys
 
 # Download
 - Official Website: https://copygpt.sethusenthil.com
 - Chrome Store: https://chrome.google.com/webstore/detail/copy-for-chat-gpt/mloblghgjiagjdffmgobhbgmplhongpm
+- Demo Video: https://youtu.be/UxyZcaZSvDA
 
 ## This is still in development, I made this quickly before I went to bed 💀
 ## Known Bugs
-- CMD+K shortcut does not work properly in some situations (because of outdated document references when page is navigated)
-- Emoji is boxed out on some computers (since emoji font is not available, fix: to replace to image)
+- Up arrow traversing does not work as expected (due to event propagation)
 - Enhancement: Check convo length for changes before traversing through convo (removed in current version due to document reference inconsistency)
 
 # How to add extension
-Download Source
-Load unpacked extension
-Will publish on Chrome store once done
+- Install the extension from the Chrome Store
+- OR Download Source and Load unpacked extension
 
 ![Preview](media/demo.png)
 Plz don't tell my prof, thx!

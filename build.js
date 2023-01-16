@@ -2,7 +2,7 @@ const fs = require('fs');
 
 //delete old build folder if it exists
 if (fs.existsSync('build')) {
-  fs.rmdirSync('build', { recursive: true });
+    fs.rmdirSync('build', { recursive: true });
 }
 
 //create folder called build

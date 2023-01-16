@@ -1,5 +1,4 @@
 (function () {
-
   const showSnackbar = (message) => {
     const snack = document.createElement('div');
     snack.classList.add('snackbar');
@@ -22,25 +21,7 @@
   };
 
 
-  document.addEventListener("keydown", function (event) {
-    const chatContainer = document.querySelector('.flex .flex-col .items-center');
-
-    if (event.key === "k" && event.ctrlKey) {
-      console.log('Copy Shortcut Pressed');
-      //when command k is pressed
-      const chatbubbles = chatContainer.querySelectorAll('main.w-full .border-b');
-      if (chatbubbles.length % 2 === 0) {
-        //if last chat is from bot
-        const lastChatBubble = chatbubbles[chatbubbles.length - 1];
-        const text = lastChatBubble.querySelector('.markdown').innerText
-        copyToClipboard(text);
-      }
-
-    }
-  });
-
-
-  const intervalId = window.setInterval(function () {
+  const intervalId = window.setInterval(async function () {
     const chatContainer = document.querySelector('.flex .flex-col .items-center');
 
     //console.log('probing for new chat bubbles');
@@ -59,11 +40,11 @@
         if (!thumbContainer.classList.contains(CLIPBOARD_CLASS_NAME)) {
 
           thumbContainer.classList.add(CLIPBOARD_CLASS_NAME);
-          thumbContainer.innerHTML = 'Copy to Clipboard 📋';
+          thumbContainer.innerHTML = 'Copy to Clipboard <img src="https://copygpt.sethusenthil.com/cdn/clipboard-emoji.webp" alt="clipboard emoji" class="emoji"/>';
 
           thumbContainer.addEventListener('click', function () {
 
-            const text = chatbox.querySelector('.markdown').innerText;
+            const text = chatbox.querySelector('.markdown p').innerText;
             copyToClipboard(text);
 
           });
@@ -73,6 +54,51 @@
 
       }
     });
+
+    if (chatContainer.getAttribute('listener-injected') !== 'true') {
+
+      console.log('setting event listener cause its not already there')
+      document.addEventListener('keydown', function (event) {
+        const chatContainer = document.querySelector('.flex .flex-col .items-center');
+
+        if (event.metaKey && event.key === 'k') {
+          console.log('Copy Shortcut Pressed');
+          //when command k is pressed
+          const chatbubbles = chatContainer.querySelectorAll('main.w-full .border-b');
+          if (chatbubbles.length % 2 === 0) {
+            //if last chat is from bot
+            const lastChatBubble = chatbubbles[chatbubbles.length - 1];
+            const text = lastChatBubble.querySelector('.markdown').innerText
+            copyToClipboard(text);
+          }
+
+        }
+        chatContainer.setAttribute('listener-injected', 'true');
+      });
+
+      const textarea = document.querySelector('textarea');
+
+      textarea.addEventListener('keydown', function (event) {
+        if (event.key === 'ArrowUp') {
+          if (chatbubbles.length > 0) {
+            let lastSetIndex = chatContainer.getAttribute('last-set-index') ?? 0;
+            console.log('lastSetIndex', lastSetIndex);
+
+            if (lastSetIndex >= chatbubbles.length) {
+              lastSetIndex = 0;
+            }
+
+            lastSetIndex++;
+
+            const lastChatBubble = chatbubbles[chatbubbles.length - lastSetIndex];
+            const text = lastChatBubble.innerText
+
+            textarea.value = text;
+            chatContainer.setAttribute('last-set-index', lastSetIndex);
+          }
+        }
+      });
+    }
   }, 1000);
 
 
