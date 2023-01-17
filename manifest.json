@@ -10,7 +10,7 @@
         "128": "media/128.png"
     },
     "description": "This extension allows you to copy chat GPT responses with a click of a button or through CMD+K",
-    "version": "0.2",
+    "version": "0.2.1",
     "content_scripts": [
         {
             "js": [

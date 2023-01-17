@@ -1,4 +1,8 @@
 (function () {
+  const CHAT_TEXT_SELECTOR = '.markdown';
+  const CLIPBOARD_CLASS_NAME = 'copy-to-clipboard';
+
+
   const showSnackbar = (message) => {
     const snack = document.createElement('div');
     snack.classList.add('snackbar');
@@ -13,7 +17,7 @@
 
   const copyToClipboard = (str) => {
     navigator.clipboard.writeText(str).then(function () {
-      console.log('Async: Copying to clipboard was successful!');
+      //console.log('Async: Copying to clipboard was successful!');
     }, function (err) {
       console.error('Async: Could not copy text: ', err);
     });
@@ -35,8 +39,6 @@
         //it is a chat box from bot
         let thumbContainer = chatbox.querySelector('.flex .self-end');
 
-        const CLIPBOARD_CLASS_NAME = 'copy-to-clipboard';
-
         if (!thumbContainer.classList.contains(CLIPBOARD_CLASS_NAME)) {
 
           thumbContainer.classList.add(CLIPBOARD_CLASS_NAME);
@@ -44,7 +46,7 @@
 
           thumbContainer.addEventListener('click', function () {
 
-            const text = chatbox.querySelector('.markdown p').innerText;
+            const text = chatbox.querySelector(CHAT_TEXT_SELECTOR).innerText;
             copyToClipboard(text);
 
           });
@@ -57,18 +59,18 @@
 
     if (chatContainer.getAttribute('listener-injected') !== 'true') {
 
-      console.log('setting event listener cause its not already there')
+      //console.log('setting event listener cause its not already there')
       document.addEventListener('keydown', function (event) {
         const chatContainer = document.querySelector('.flex .flex-col .items-center');
 
         if (event.metaKey && event.key === 'k') {
-          console.log('Copy Shortcut Pressed');
+          //console.log('Copy Shortcut Pressed');
           //when command k is pressed
           const chatbubbles = chatContainer.querySelectorAll('main.w-full .border-b');
           if (chatbubbles.length % 2 === 0) {
             //if last chat is from bot
             const lastChatBubble = chatbubbles[chatbubbles.length - 1];
-            const text = lastChatBubble.querySelector('.markdown').innerText
+            const text = lastChatBubble.querySelector(CHAT_TEXT_SELECTOR).innerText
             copyToClipboard(text);
           }
 
@@ -82,7 +84,7 @@
         if (event.key === 'ArrowUp') {
           if (chatbubbles.length > 0) {
             let lastSetIndex = chatContainer.getAttribute('last-set-index') ?? 0;
-            console.log('lastSetIndex', lastSetIndex);
+            //console.log('lastSetIndex', lastSetIndex);
 
             if (lastSetIndex >= chatbubbles.length) {
               lastSetIndex = 0;
