@@ -1,61 +1,144 @@
 .copy-to-clipboard {
-    inline-size: auto;
-    overflow-wrap: break-word;
-    background-color: #343541;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-    display: flex;
-    align-items: center;
+  inline-size: auto;
+  overflow-wrap: break-word;
+  background-color: #343541;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
 }
 
-.emoji{
+.emoji {
   height: 1em;
 }
 
 .copy-to-clipboard:hover {
-    background-color: #2b2b36;
+  background-color: #2b2b36;
 }
 
 .snackbar {
-    visibility: hidden;
-    min-width: 250px;
-    margin-left: -125px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 15px;
-    padding: 16px;
-    position: fixed;
-    z-index: 1000;
-    left: 50%;
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 15px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  height: max-content;
+  font-size: 17px;
+}
+
+.bottom {
+  bottom: 30px;
+}
+
+.top {
+  top: 30px;
+}
+
+.snackbar.bottom.show {
+  visibility: visible;
+  -webkit-animation: fadein-bottom 0.5s, fadein-bottom 0.5s 2.5s;
+  animation: fadein-bottom 0.5s, fadein-bottom 0.5s 2.5s;
+}
+
+.snackbar.top.show {
+  visibility: visible;
+  -webkit-animation: fadein-top 0.5s, fadein-top 0.5s 2.5s;
+  animation: fadein-top 0.5s, fadein-top 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein-bottom {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
     bottom: 30px;
-    font-size: 17px;
+    opacity: 1;
   }
+}
 
-  .snackbar.show {
-    visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+@keyframes fadein-bottom {
+  from {
+    bottom: 0;
+    opacity: 0;
   }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
 
-  @-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
+@-webkit-keyframes fadein-bottom {
+  from {
+    bottom: 30px;
+    opacity: 1;
   }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
 
-  @keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
+@keyframes fadein-bottom {
+  from {
+    bottom: 30px;
+    opacity: 1;
   }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
 
-  @-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
+/*fade in and out animation for top snackbar*/
+@-webkit-keyframes fadein-top {
+  from {
+    top: 0;
+    opacity: 0;
   }
+  to {
+    top: 30px;
+    opacity: 1;
+  }
+}
 
-  @keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
+@keyframes fadein-top {
+  from {
+    top: 0;
+    opacity: 0;
   }
+  to {
+    top: 30px;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadein-top {
+  from {
+    top: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes fadein-top {
+  from {
+    top: 30px;
+    opacity: 1;
+  }
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}
