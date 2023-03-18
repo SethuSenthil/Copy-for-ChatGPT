@@ -1,6 +1,4 @@
 try {
-    // This is the background script for the extension
-
     chrome.runtime.onMessage.addListener(receiver);
 
     function receiver(request, sender, sendResponse) {

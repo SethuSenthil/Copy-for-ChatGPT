@@ -60,6 +60,10 @@
 
 
   const intervalId = window.setInterval(async function () {
+    if (!document.querySelector('#copygpt-credits')) {
+      document.querySelector('.text-center').insertAdjacentHTML('beforeend', '&nbsp; ✨ <a class="underline" id="copygpt-credits" target="_blank" href="https://copygpt.sethusenthil.com/?ref=gptFooter"> Enhanced by CopyGPT</a>')
+    }
+
     const chatContainer = document.querySelector('.flex .flex-col .items-center');
 
     //console.log('probing for new chat bubbles');
@@ -71,14 +75,14 @@
       //first chat box needs to be from user, hence all the even chat bubbles are from bot
       if ((i + 1) % 2 === 0) {
         //it is a chat box from bot
-        let thumbContainer = chatbox.querySelector('.flex .self-end');
+        const addAfter = chatbox.querySelector(CHAT_TEXT_SELECTOR);
 
-        if (!thumbContainer.classList.contains(CLIPBOARD_CLASS_NAME)) {
+        if (chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`) === null) {
 
-          thumbContainer.classList.add(CLIPBOARD_CLASS_NAME);
-          thumbContainer.innerHTML = 'Copy to Clipboard <img src="https://copygpt.sethusenthil.com/cdn/clipboard-emoji.webp" alt="clipboard emoji" class="emoji"/>';
-
-          thumbContainer.addEventListener('click', function () {
+          addAfter.insertAdjacentHTML('afterend', `<div style="display: flex; align-items: center; color: lightslategray;" class="copy-to-clipboard">
+          <p>Copy to Clipboard</p> <img src="https://copygpt.sethusenthil.com/cdn/clipboard-emoji.webp" alt="clipboard emoji" class="emoji"/>
+          </div>`);
+          chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`).addEventListener('click', function () {
 
             const text = chatbox.querySelector(CHAT_TEXT_SELECTOR).innerText;
             copyToClipboard(text);
@@ -137,6 +141,8 @@
     }
   }, 1000);
 
+  //Check if user is pro
+  //JSON.parse(document.querySelector('#__NEXT_DATA__')?.innerHTML)?.props?.pageProps?.serviceAnnouncement?.paied
 
 })();
 

@@ -1,7 +1,7 @@
 .copy-to-clipboard {
   inline-size: auto;
   overflow-wrap: break-word;
-  background-color: #343541;
+  background-color: #ffffff;
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
@@ -15,7 +15,18 @@
 }
 
 .copy-to-clipboard:hover {
+  background-color: #eaeaea;
+}
+
+.dark .copy-to-clipboard {
+  background-color: #343541;
+}
+.dark .copy-to-clipboard:hover {
   background-color: #2b2b36;
+}
+
+.copy-to-clipboard p {
+  padding-right: 8px;
 }
 
 .snackbar {
