@@ -60,8 +60,12 @@
 
 
   const intervalId = window.setInterval(async function () {
-    if (!document.querySelector('#copygpt-credits')) {
-      document.querySelector('.text-center').insertAdjacentHTML('beforeend', '&nbsp; ✨ <a class="underline" id="copygpt-credits" target="_blank" href="https://copygpt.sethusenthil.com/?ref=gptFooter"> Enhanced by CopyGPT</a>')
+     if (!document.querySelector('#copygpt-credits')) {
+      var textCenterElement = document.querySelector('.text-center');
+	  if (textCenterElement == null) {
+		textCenterElement = document.querySelector('.text-center.text-xs');
+	  }
+	  textCenterElement.insertAdjacentHTML('beforeend', '&nbsp; ✨ <a class="underline" id="copygpt-credits" target="_blank" href="https://copygpt.sethusenthil.com/?ref=gptFooter"> Enhanced by CopyGPT</a>')
     }
 
     const chatContainer = document.querySelector('.flex .flex-col .items-center');
