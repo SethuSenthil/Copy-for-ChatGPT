@@ -70,10 +70,16 @@
     const chatbubbles = chatContainer.querySelectorAll('main.w-full .border-b');
     //console.log('chatbubbles', chatbubbles);
 
+	//check if it is a plus user
+	var plusUser = (chatbubbles.length % 2 === 0) ? false : true;
+	
     chatbubbles.forEach((chatbox, i) => {
       //console.log('chatbox', chatbox);
       //first chat box needs to be from user, hence all the even chat bubbles are from bot
-      if ((i + 1) % 2 === 0) {
+	  //plus users will have the first row as model selection
+      if ((i>0 && (i % 2 === 0) && plusUser) ||
+	      ((i + 1) % 2 === 0 && !plusUser))
+	  {
         //it is a chat box from bot
         const addAfter = chatbox.querySelector(CHAT_TEXT_SELECTOR);
 
