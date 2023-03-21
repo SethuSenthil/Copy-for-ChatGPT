@@ -1,6 +1,5 @@
 import * as path from "https://deno.land/std/path/mod.ts";
 import { compress } from "https://deno.land/x/zip@v1.2.5/mod.ts";
-import { Language, minify } from "https://deno.land/x/minifier/mod.ts";
 
 const buildPath = path.join("./build");
 
@@ -28,19 +27,11 @@ const cs: Array<Array<string>> = manifest.content_scripts[0];
 cs.js.push(manifest.background.service_worker);
 
 cs.js.forEach((jsFile: string) => {
-  const jsFileData = Deno.readTextFileSync(jsFile);
-  Deno.writeTextFileSync(
-    path.join(buildPath, jsFile),
-    minify(Language.JS, jsFileData)
-  );
+  Deno.copyFileSync(jsFile, path.join(buildPath, jsFile));
 });
 
 cs.css.forEach((cssFile: string) => {
-  const cssFileData = Deno.readTextFileSync(cssFile);
-  Deno.writeTextFileSync(
-    path.join(buildPath, cssFile),
-    minify(Language.CSS, cssFileData)
-  );
+  Deno.copyFileSync(cssFile, path.join(buildPath, cssFile));
 });
 
 Deno.mkdirSync(path.join(buildPath, "media"));
