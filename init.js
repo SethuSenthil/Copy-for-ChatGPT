@@ -8,7 +8,7 @@
   - ✨ AI plagiarism checker: Enabled ✅
 
   Copyright (c) ${currentYear} Sethu Senthil
-  Version: 0.3.5
+  Version: 0.3.6
   https://copygpt.sethusenthil.com
   https://sethusenthil.com
   `)
@@ -60,12 +60,12 @@
 
 
   const intervalId = window.setInterval(async function () {
-     if (!document.querySelector('#copygpt-credits')) {
+    if (!document.querySelector('#copygpt-credits')) {
       var textCenterElement = document.querySelector('.text-center');
-	  if (textCenterElement == null) {
-		textCenterElement = document.querySelector('.text-center.text-xs');
-	  }
-	  textCenterElement.insertAdjacentHTML('beforeend', '&nbsp; ✨ <a class="underline" id="copygpt-credits" target="_blank" href="https://copygpt.sethusenthil.com/?ref=gptFooter"> Enhanced by CopyGPT</a>')
+      if (textCenterElement == null) {
+        textCenterElement = document.querySelector('.text-center.text-xs');
+      }
+      textCenterElement.insertAdjacentHTML('beforeend', '&nbsp; ✨ <a class="underline" id="copygpt-credits" target="_blank" href="https://copygpt.sethusenthil.com/?ref=gptFooter"> Enhanced by CopyGPT</a>')
     }
 
     const chatContainer = document.querySelector('.flex .flex-col .items-center');
