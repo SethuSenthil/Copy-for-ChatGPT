@@ -8,7 +8,7 @@
   - ✨ AI plagiarism checker: Enabled ✅
 
   Copyright (c) ${currentYear} Sethu Senthil
-  Version: 0.3.1
+  Version: 0.3.5
   https://copygpt.sethusenthil.com
   https://sethusenthil.com
   `)
@@ -74,20 +74,21 @@
     const chatbubbles = chatContainer.querySelectorAll('main.w-full .border-b');
     //console.log('chatbubbles', chatbubbles);
 
-	//check if it is a plus user
-	var plusUser = (chatbubbles.length % 2 === 0) ? false : true;
-	
+    //check if it is a plus user
+    var plusUser = (chatbubbles.length % 2 === 0) ? false : true;
+
     chatbubbles.forEach((chatbox, i) => {
       //console.log('chatbox', chatbox);
       //first chat box needs to be from user, hence all the even chat bubbles are from bot
-	  //plus users will have the first row as model selection
-      if ((i>0 && (i % 2 === 0) && plusUser) ||
-	      ((i + 1) % 2 === 0 && !plusUser))
-	  {
+      //plus users will have the first row as model selection
+      if ((i > 0 && (i % 2 === 0) && plusUser) ||
+        ((i + 1) % 2 === 0 && !plusUser)) {
         //it is a chat box from bot
         const addAfter = chatbox.querySelector(CHAT_TEXT_SELECTOR);
 
         if (chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`) === null) {
+
+          //TODO: to check if ChatGPT is done typing check .result-streaming class exists in chatbox
 
           addAfter.insertAdjacentHTML('afterend', `<div style="display: flex; align-items: center; color: lightslategray;" class="copy-to-clipboard">
           <p>Copy to Clipboard</p> <img src="https://copygpt.sethusenthil.com/cdn/clipboard-emoji.webp" alt="clipboard emoji" class="emoji"/>
@@ -98,10 +99,7 @@
             copyToClipboard(text);
 
           });
-        } else {
-
         }
-
       }
     });
 
@@ -150,9 +148,6 @@
       });
     }
   }, 1000);
-
-  //Check if user is pro
-  //JSON.parse(document.querySelector('#__NEXT_DATA__')?.innerHTML)?.props?.pageProps?.serviceAnnouncement?.paied
 
 })();
 
