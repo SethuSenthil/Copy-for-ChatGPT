@@ -8,7 +8,7 @@
   - ✨ AI plagiarism checker: Enabled ✅
 
   Copyright (c) ${currentYear} Sethu Senthil
-  Version: 0.3.6
+  Version: 0.3.7
   https://copygpt.sethusenthil.com
   https://sethusenthil.com
   `)
@@ -109,11 +109,17 @@
       document.addEventListener('keydown', function (event) {
         const chatContainer = document.querySelector('.flex .flex-col .items-center');
 
-        if (event.metaKey && event.key === 'k') {
+        // check for CTRL+K on Windows or CMD+K on Mac
+		if ((event.ctrlKey || event.metaKey) && event.keyCode === 75) { 
           //console.log('Copy Shortcut Pressed');
-          //when command k is pressed
+          
           const chatbubbles = chatContainer.querySelectorAll('main.w-full .border-b');
-          if (chatbubbles.length % 2 === 0) {
+		  
+		  //check if it is a plus user
+		  var plusUser = (chatbubbles.length % 2 === 0) ? false : true;
+
+          if (((chatbubbles.length % 2 === 0) && !plusUser) ||
+			  ((chatbubbles.length % 2 === 1) && plusUser)) {
             //if last chat is from bot
             const lastChatBubble = chatbubbles[chatbubbles.length - 1];
             const text = lastChatBubble.querySelector(CHAT_TEXT_SELECTOR).innerText
