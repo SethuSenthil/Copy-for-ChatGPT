@@ -1,5 +1,7 @@
 import * as path from "https://deno.land/std/path/mod.ts";
 import { compress } from "https://deno.land/x/zip@v1.2.5/mod.ts";
+import UglifyJS from "npm:uglify-js";
+import { minify } from "npm:csso";
 
 const buildPath = path.join("./build");
 
@@ -27,11 +29,21 @@ const cs: Array<Array<string>> = manifest.content_scripts[0];
 cs.js.push(manifest.background.service_worker);
 
 cs.js.forEach((jsFile: string) => {
-  Deno.copyFileSync(jsFile, path.join(buildPath, jsFile));
+  const jsFileData = Deno.readTextFileSync(jsFile);
+
+  Deno.writeTextFileSync(
+    path.join(buildPath, jsFile),
+    UglifyJS.minify(jsFileData, {}).code
+  );
 });
 
 cs.css.forEach((cssFile: string) => {
-  Deno.copyFileSync(cssFile, path.join(buildPath, cssFile));
+  const cssFileData = Deno.readTextFileSync(cssFile);
+
+  Deno.writeTextFileSync(
+    path.join(buildPath, cssFile),
+    minify(cssFileData).css
+  );
 });
 
 Deno.mkdirSync(path.join(buildPath, "media"));
@@ -48,3 +60,5 @@ for (const size in icns) {
 }
 
 compress(buildPath, "build.zip", { overwrite: true });
+
+//deno run --allow-read --allow-write --allow-run --allow-env  build.ts

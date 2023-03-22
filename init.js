@@ -110,16 +110,16 @@
         const chatContainer = document.querySelector('.flex .flex-col .items-center');
 
         // check for CTRL+K on Windows or CMD+K on Mac
-		if ((event.ctrlKey || event.metaKey) && event.keyCode === 75) { 
+        if ((event.ctrlKey || event.metaKey) && event.keyCode === 75) {
           //console.log('Copy Shortcut Pressed');
-          
+
           const chatbubbles = chatContainer.querySelectorAll('main.w-full .border-b');
-		  
-		  //check if it is a plus user
-		  var plusUser = (chatbubbles.length % 2 === 0) ? false : true;
+
+          //check if it is a plus user
+          var plusUser = (chatbubbles.length % 2 === 0) ? false : true;
 
           if (((chatbubbles.length % 2 === 0) && !plusUser) ||
-			  ((chatbubbles.length % 2 === 1) && plusUser)) {
+            ((chatbubbles.length % 2 === 1) && plusUser)) {
             //if last chat is from bot
             const lastChatBubble = chatbubbles[chatbubbles.length - 1];
             const text = lastChatBubble.querySelector(CHAT_TEXT_SELECTOR).innerText
