@@ -14,13 +14,17 @@
     "host_permissions": [
         "https://api.gptzero.me/*"
     ],
+	"permissions": [
+		"storage"
+	],
     "background": {
         "service_worker": "background.js"
     },
+	"options_page": "options.html",
     "content_scripts": [
         {
             "js": [
-                "init.js"
+                "init.js","settings.js"
             ],
             "css": [
                 "styles.css"

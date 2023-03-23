@@ -14,9 +14,8 @@
   `)
 
   const CHAT_TEXT_SELECTOR = '.markdown';
-  const CHAT_TEXT_SELECTOR_ALL = '.markdown,.min-h-\\[20px\\]';
   const CLIPBOARD_CLASS_NAME = 'copy-to-clipboard';
-  var copyUserPromptToClipboard = false;
+
 
   const showSnackbar = (message, position) => {
     const snack = document.createElement('div');
@@ -79,55 +78,26 @@
 
     //check if it is a plus user
     var plusUser = (chatbubbles.length % 2 === 0) ? false : true;
-	
-	//check if copyUserPromptToClipboard is enabled
-	chrome.storage.sync.get('copyUserPromptToClipboard', function(settings) {
-	  if (settings.copyUserPromptToClipboard) {
-		copyUserPromptToClipboard = true;
-	  }
-	});
 
     chatbubbles.forEach((chatbox, i) => {
       //console.log('chatbox', chatbox);
       //first chat box needs to be from user, hence all the even chat bubbles are from bot
       //plus users will have the first row as model selection
-      if ((i > 0 && (i % 2 === 0) && plusUser && !copyUserPromptToClipboard) ||
-        ((i + 1) % 2 === 0 && !plusUser && !copyUserPromptToClipboard) ||
-		(copyUserPromptToClipboard && ((i > 0 && plusUser) || !plusUser))) {
-			
-		var addAfter;
-		var text;
-		
-		//Check if showing copy to clipboard for user prompts 
-		if (copyUserPromptToClipboard) {
-			
-			//it is a chat box from bot
-			addAfter = chatbox.querySelector(CHAT_TEXT_SELECTOR);
-			
-			if (addAfter===null) {
-				
-				//chatbox from user
-				var addAfterAll = chatbox.querySelectorAll(CHAT_TEXT_SELECTOR_ALL);
-				if (addAfterAll!=null && addAfterAll.length > 0) {
-					addAfter = addAfterAll[0];
-				}
-			}
-			
-		} else {
-			//it is a chat box from bot
-			addAfter = chatbox.querySelector(CHAT_TEXT_SELECTOR);
-		}
-		
-        if (chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`) === null) {
-					
-		  //TODO: to check if ChatGPT is done typing check .result-streaming class exists in chatbox
+      if ((i > 0 && (i % 2 === 0) && plusUser) ||
+        ((i + 1) % 2 === 0 && !plusUser)) {
+        //it is a chat box from bot
+        const addAfter = chatbox.querySelector(CHAT_TEXT_SELECTOR);
 
-		  addAfter.insertAdjacentHTML('afterend', `<div style="display: flex; align-items: center; color: lightslategray;" class="copy-to-clipboard">
-		  <p>Copy to Clipboard</p> <img src="https://copygpt.sethusenthil.com/cdn/clipboard-emoji.webp" alt="clipboard emoji" class="emoji"/>
-		  </div>`);
-		  chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`).addEventListener('click', function () {
-  
-			text = addAfter.innerText;
+        if (chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`) === null) {
+
+          //TODO: to check if ChatGPT is done typing check .result-streaming class exists in chatbox
+
+          addAfter.insertAdjacentHTML('afterend', `<div style="display: flex; align-items: center; color: lightslategray;" class="copy-to-clipboard">
+          <p>Copy to Clipboard</p> <img src="https://copygpt.sethusenthil.com/cdn/clipboard-emoji.webp" alt="clipboard emoji" class="emoji"/>
+          </div>`);
+          chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`).addEventListener('click', function () {
+
+            const text = chatbox.querySelector(CHAT_TEXT_SELECTOR).innerText;
             copyToClipboard(text);
 
           });

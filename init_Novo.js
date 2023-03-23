@@ -13,10 +13,9 @@
   https://sethusenthil.com
   `)
 
-  const CHAT_TEXT_SELECTOR = '.markdown';
-  const CHAT_TEXT_SELECTOR_ALL = '.markdown,.min-h-\\[20px\\]';
+  const CHAT_TEXT_SELECTOR = '.markdown,.min-h-\\[20px\\]';
   const CLIPBOARD_CLASS_NAME = 'copy-to-clipboard';
-  var copyUserPromptToClipboard = false;
+
 
   const showSnackbar = (message, position) => {
     const snack = document.createElement('div');
@@ -66,8 +65,8 @@
       if (textCenterElement == null) {
         textCenterElement = document.querySelector('.text-center.text-xs');
       }
-	  if (textCenterElement !== null) {
-		textCenterElement.insertAdjacentHTML('beforeend', '&nbsp; ✨ <a class="underline" id="copygpt-credits" target="_blank" href="https://copygpt.sethusenthil.com/?ref=gptFooter"> Enhanced by CopyGPT</a>');
+	  if (textCenterElement != null) {
+		textCenterElement.insertAdjacentHTML('beforeend', '&nbsp; ✨ <a class="underline" id="copygpt-credits" target="_blank" href="https://copygpt.sethusenthil.com/?ref=gptFooter"> Enhanced by CopyGPT</a>')
 	  }
     }
 
@@ -79,55 +78,28 @@
 
     //check if it is a plus user
     var plusUser = (chatbubbles.length % 2 === 0) ? false : true;
-	
-	//check if copyUserPromptToClipboard is enabled
-	chrome.storage.sync.get('copyUserPromptToClipboard', function(settings) {
-	  if (settings.copyUserPromptToClipboard) {
-		copyUserPromptToClipboard = true;
-	  }
-	});
 
     chatbubbles.forEach((chatbox, i) => {
       //console.log('chatbox', chatbox);
       //first chat box needs to be from user, hence all the even chat bubbles are from bot
       //plus users will have the first row as model selection
-      if ((i > 0 && (i % 2 === 0) && plusUser && !copyUserPromptToClipboard) ||
-        ((i + 1) % 2 === 0 && !plusUser && !copyUserPromptToClipboard) ||
-		(copyUserPromptToClipboard && ((i > 0 && plusUser) || !plusUser))) {
-			
-		var addAfter;
-		var text;
-		
-		//Check if showing copy to clipboard for user prompts 
-		if (copyUserPromptToClipboard) {
-			
-			//it is a chat box from bot
-			addAfter = chatbox.querySelector(CHAT_TEXT_SELECTOR);
-			
-			if (addAfter===null) {
-				
-				//chatbox from user
-				var addAfterAll = chatbox.querySelectorAll(CHAT_TEXT_SELECTOR_ALL);
-				if (addAfterAll!=null && addAfterAll.length > 0) {
-					addAfter = addAfterAll[0];
-				}
-			}
-			
-		} else {
-			//it is a chat box from bot
-			addAfter = chatbox.querySelector(CHAT_TEXT_SELECTOR);
-		}
-		
-        if (chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`) === null) {
-					
-		  //TODO: to check if ChatGPT is done typing check .result-streaming class exists in chatbox
+//      if ((i > 0 && (i % 2 === 0) && plusUser) ||
+  //      ((i + 1) % 2 === 0 && !plusUser))
+		if (i>0)
+		{
+        //it is a chat box from bot
+        const addAfter = chatbox.querySelectorAll(CHAT_TEXT_SELECTOR);
 
-		  addAfter.insertAdjacentHTML('afterend', `<div style="display: flex; align-items: center; color: lightslategray;" class="copy-to-clipboard">
-		  <p>Copy to Clipboard</p> <img src="https://copygpt.sethusenthil.com/cdn/clipboard-emoji.webp" alt="clipboard emoji" class="emoji"/>
-		  </div>`);
-		  chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`).addEventListener('click', function () {
-  
-			text = addAfter.innerText;
+        if (chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`) === null && addAfter!=null && addAfter.length > 0) {
+
+          //TODO: to check if ChatGPT is done typing check .result-streaming class exists in chatbox
+
+          addAfter[0].insertAdjacentHTML('afterend', `<div style="display: flex; align-items: center; color: lightslategray;" class="copy-to-clipboard">
+          <p>Copy to Clipboard</p> <img src="https://copygpt.sethusenthil.com/cdn/clipboard-emoji.webp" alt="clipboard emoji" class="emoji"/>
+          </div>`);
+          chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`).addEventListener('click', function () {
+
+            const text = addAfter[0].innerText;
             copyToClipboard(text);
 
           });
@@ -142,16 +114,16 @@
         const chatContainer = document.querySelector('.flex .flex-col .items-center');
 
         // check for CTRL+K on Windows or CMD+K on Mac
-        if ((event.ctrlKey || event.metaKey) && event.keyCode === 75) {
+		if ((event.ctrlKey || event.metaKey) && event.keyCode === 75) { 
           //console.log('Copy Shortcut Pressed');
-
+          
           const chatbubbles = chatContainer.querySelectorAll('main.w-full .border-b');
-
-          //check if it is a plus user
-          var plusUser = (chatbubbles.length % 2 === 0) ? false : true;
+		  
+		  //check if it is a plus user
+		  var plusUser = (chatbubbles.length % 2 === 0) ? false : true;
 
           if (((chatbubbles.length % 2 === 0) && !plusUser) ||
-            ((chatbubbles.length % 2 === 1) && plusUser)) {
+			  ((chatbubbles.length % 2 === 1) && plusUser)) {
             //if last chat is from bot
             const lastChatBubble = chatbubbles[chatbubbles.length - 1];
             const text = lastChatBubble.querySelector(CHAT_TEXT_SELECTOR).innerText
