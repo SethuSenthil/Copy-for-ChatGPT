@@ -65,7 +65,9 @@
       if (textCenterElement == null) {
         textCenterElement = document.querySelector('.text-center.text-xs');
       }
-      textCenterElement.insertAdjacentHTML('beforeend', '&nbsp; ✨ <a class="underline" id="copygpt-credits" target="_blank" href="https://copygpt.sethusenthil.com/?ref=gptFooter"> Enhanced by CopyGPT</a>')
+	  if (textCenterElement !== null) {
+		textCenterElement.insertAdjacentHTML('beforeend', '&nbsp; ✨ <a class="underline" id="copygpt-credits" target="_blank" href="https://copygpt.sethusenthil.com/?ref=gptFooter"> Enhanced by CopyGPT</a>');
+	  }
     }
 
     const chatContainer = document.querySelector('.flex .flex-col .items-center');
