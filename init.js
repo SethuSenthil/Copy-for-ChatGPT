@@ -164,27 +164,51 @@
 
       const textarea = document.querySelector('textarea');
 
-      textarea.addEventListener('keydown', function (event) {
-        if (event.key === 'ArrowUp') {
-          if (chatbubbles.length > 0) {
-            let lastSetIndex = chatContainer.getAttribute('last-set-index') ?? 0;
-            //console.log('lastSetIndex', lastSetIndex);
+	  if (textarea.getAttribute('listener-injected') !== 'true') {
+			textarea.setAttribute('listener-injected', 'true');
+			textarea.addEventListener('keydown', function (event) {
 
-            if (lastSetIndex >= chatbubbles.length) {
-              lastSetIndex = 0;
-            }
+			// CTRL+UP or CMD+UP to navigate through user previous prompts
+			if ((event.ctrlKey || event.metaKey) && (event.key === 'ArrowUp')) {
+			
+			  const chatContainer = document.querySelector('.flex .flex-col .items-center');		
+			  const chatbubbles = chatContainer.querySelectorAll('main.w-full .border-b');
+				
+			  if (chatbubbles.length > 0) {
+					let lastSetIndex = chatContainer.getAttribute('last-set-index') ?? chatbubbles.length;
+					
+					if (event.key === 'ArrowUp') {
+						lastSetIndex-=2;
 
-            lastSetIndex++;
+						//check if it is a plus user
+						var plusUser = (chatbubbles.length % 2 === 0) ? false : true;
+						var firstIndex = plusUser ? 1 : 0
+						
+						if (lastSetIndex < firstIndex) {
+						  lastSetIndex = chatbubbles.length-2;
+						}
+					}
+					
+					const lastChatBubble = chatbubbles[lastSetIndex];
+					var text = lastChatBubble.innerText
 
-            const lastChatBubble = chatbubbles[chatbubbles.length - lastSetIndex];
-            const text = lastChatBubble.innerText
-
-            textarea.value = text;
-            chatContainer.setAttribute('last-set-index', lastSetIndex);
-          }
-        }
-      });
-    }
+					text = text.replace('\n\nCopy to Clipboard','');
+					textarea.value = text;
+					
+					// Expand the textarea if prompt is multiline otherwise keeps default size
+					if (text.includes('\n')) {
+						textarea.setAttribute('style','max-height: 200px; height: 264px;');
+					} else {
+						textarea.setAttribute('style', 'max-height: 200px; height: 24px; overflow-y: hidden;');
+					}
+					
+					chatContainer.setAttribute('last-set-index', lastSetIndex);
+				}
+			}
+		  });
+	  }
+	}
+	
   }, 1000);
 
 })();
