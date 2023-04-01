@@ -8,6 +8,7 @@
   transition: 0.3s;
   display: flex;
   align-items: center;
+  width: fit-content;
 }
 
 .emoji {
