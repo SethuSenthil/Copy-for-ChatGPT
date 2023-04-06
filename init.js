@@ -68,7 +68,7 @@
       textCenterElement.insertAdjacentHTML('beforeend', '&nbsp; ✨ <a class="underline" id="copygpt-credits" target="_blank" href="https://copygpt.sethusenthil.com/?ref=gptFooter"> Enhanced by CopyGPT</a>')
     }
 
-    const chatContainer = document.querySelector('.flex .flex-col .items-center');
+    const chatContainer = document.querySelector('main');
 
     //console.log('probing for new chat bubbles');
     const chatbubbles = chatContainer.querySelectorAll('main.w-full .border-b');
@@ -156,4 +156,3 @@
   }, 1000);
 
 })();
-
