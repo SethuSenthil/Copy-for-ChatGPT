@@ -23,7 +23,7 @@ const settingsDiv = document.createElement("div");
 settingsDiv.innerHTML = `
   <label>
     <input type="checkbox" id="copyUserPromptToClipboard">
-    Copy User Prompt To Clipboard Enabled
+    Enable User Prompt Copy
   </label>
 `;
 settingsDiv.addEventListener("change", saveSettings);
