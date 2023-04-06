@@ -60,5 +60,3 @@ for (const size in icns) {
 }
 
 compress(buildPath, "build.zip", { overwrite: true });
-
-//deno run --allow-read --allow-write --allow-run --allow-env  build.ts

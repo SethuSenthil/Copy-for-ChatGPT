@@ -1,1 +1,1 @@
-deno run --allow-read --allow-write --allow-run build.ts
+deno run --allow-read --allow-write --allow-run --allow-env  build.ts
