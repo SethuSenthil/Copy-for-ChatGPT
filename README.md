@@ -7,8 +7,6 @@ BETA FEATURE: This extension is testing the ability to autopopulate and traverse
 - Official Website: https://copygpt.sethusenthil.com
 - Chrome Store: https://chrome.google.com/webstore/detail/copy-for-chat-gpt/mloblghgjiagjdffmgobhbgmplhongpm
 - Demo Video: https://youtu.be/UxyZcaZSvDA
-
-## This is still in development, I made this quickly before I went to bed 💀
 ## Known Bugs
 - Up arrow traversing does not work as expected (due to event propagation)
 - Enhancement: Check convo length for changes before traversing through convo (removed in current version due to document reference inconsistency)

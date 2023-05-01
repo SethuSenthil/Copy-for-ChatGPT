@@ -2,13 +2,14 @@
   console.log('%cCopyGPT (Copy For ChatGPT Extension) Loaded', 'color: green; font-size: 30px');
   const currentYear = new Date().getFullYear()
   console.log(`
-  - Copy Button: Enabled ✅
-  - CMD+K Hotkey: Enabled ✅
-  - Up Arrow Key: Enabled ✅
+  - 🔘 Copy Button: Enabled ✅
+  - ⌨️ CMD+K Hotkey: Enabled ✅
+  - ↕️ Up Arrow Key: Enabled ✅
+  - 🧼 Anti-Formatter: Enabled ✅
   - ✨ AI plagiarism checker: Enabled ✅
 
   Copyright (c) ${currentYear} Sethu Senthil
-  Version: 0.3.7
+  Version: 0.3.9
   https://copygpt.sethusenthil.com
   https://sethusenthil.com
   `)
@@ -48,6 +49,7 @@
   });
 
   const copyToClipboard = (str) => {
+    //send to AI plagiarism detector in background.js
     chrome.runtime.sendMessage({ message: str });
 
     navigator.clipboard.writeText(str).then(function () {
@@ -55,16 +57,35 @@
     }, function (err) {
       console.error('Async: Could not copy text: ', err);
     });
+
+    //copy notification
     showSnackbar('Copied to clipboard 📋');
   };
 
+  document.addEventListener('copy', (event) => {
+    //get copied selection and sterilize
+    const selection = document.getSelection().toString();
+
+    //send to AI plagiarism detector in background.js
+    chrome.runtime.sendMessage({ message: selection });
+
+    //copy it to clipboard
+    event.clipboardData.setData('text/plain', selection);
+
+    //prevent default copy behavior, without this line it will not work!
+    event.preventDefault();
+
+    //copy notification
+    showSnackbar('Copied to clipboard 📋');
+  });
 
   const intervalId = window.setInterval(async function () {
+    //GPT Credits Setter
     if (!document.querySelector('#copygpt-credits')) {
       var textCenterElement = document.querySelector('.text-center');
-      if (textCenterElement == null) {
-        textCenterElement = document.querySelector('.text-center.text-xs');
-      }
+
+      textCenterElement = textCenterElement ?? document.querySelector('.text-center.text-xs');
+
       textCenterElement.insertAdjacentHTML('beforeend', '&nbsp; ✨ <a class="underline" id="copygpt-credits" target="_blank" href="https://copygpt.sethusenthil.com/?ref=gptFooter"> Enhanced by CopyGPT</a>')
     }
 
