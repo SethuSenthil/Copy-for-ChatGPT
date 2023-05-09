@@ -10,9 +10,9 @@
         "128": "media/128.png"
     },
     "description": "This extension allows you to copy chat GPT responses with a click of a button or CMD+K and runs it through plagiarism detectors",
-    "version": "0.3.8",
+    "version": "0.3.10",
     "host_permissions": [
-        "https://api.gptzero.me/*"
+        "https://writer.com/*"
     ],
     "permissions": [
         "storage"
