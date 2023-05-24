@@ -14,6 +14,7 @@
   https://sethusenthil.com
   `)
 
+  const USER_TEXT_SELECTOR = '.items-start';
   const CHAT_TEXT_SELECTOR = '.markdown';
   const CLIPBOARD_CLASS_NAME = 'copy-to-clipboard';
 
@@ -111,10 +112,19 @@
       //console.log('chatbox', chatbox);
       //first chat box needs to be from user, hence all the even chat bubbles are from bot
       //plus users will have the first row as model selection
+      let text_selector;
       if ((i > 0 && (i % 2 === 0) && plusUser) ||
         ((i + 1) % 2 === 0 && !plusUser)) {
+        text_selector = CHAT_TEXT_SELECTOR;
+      } else if ((i > 0 && (i % 2 === 1) && plusUser) ||
+      ((i + 1) % 2 === 1 && !plusUser)) {
+        text_selector = USER_TEXT_SELECTOR;
+      } else {
+        text_selector = undefined;
+      }
+      if (text_selector !== undefined) {
         //it is a chat box from bot
-        const addAfter = chatbox.querySelector(CHAT_TEXT_SELECTOR);
+        const addAfter = chatbox.querySelector(text_selector);
 
         if (chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`) === null) {
 
@@ -125,7 +135,7 @@
           </div>`);
           chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`).addEventListener('click', function () {
 
-            const text = chatbox.querySelector(CHAT_TEXT_SELECTOR).innerText;
+            const text = chatbox.querySelector(text_selector).innerText;
             copyToClipboard(text);
 
           });
