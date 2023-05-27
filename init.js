@@ -8,7 +8,7 @@
   - ✨ AI plagiarism checker: Enabled ✅
 
   Copyright (c) ${currentYear} Sethu Senthil / Daniel Liedke
-  Version: 0.3.8
+  Version: 0.4.0
   https://copygpt.sethusenthil.com
   https://sethusenthil.com
   `)
@@ -68,7 +68,11 @@
       }
     }
 
-    const chatContainer = document.querySelector('div.flex.flex-col.items-center.text-sm.dark\\:bg-gray-800');
+    const chatContainer = document.querySelector('.h-full.dark\\:bg-gray-800');
+    if (chatContainer===null) {
+      return;
+    }
+
     const chatbubbles = chatContainer.querySelectorAll('.flex .flex-grow .flex-col');
     
     //check if copyUserPromptToClipboard is enabled
@@ -100,7 +104,10 @@
     if (chatContainer.getAttribute('listener-injected') !== 'true') {
 
       document.addEventListener('keydown', function (event) {
-        const chatContainer = document.querySelector('div.flex.flex-col.items-center.text-sm.dark\\:bg-gray-800');
+        const chatContainer = document.querySelector('.h-full.dark\\:bg-gray-800');
+        if (chatContainer===null) {
+          return;
+        }
 
         // check for CTRL+K on Windows or CMD+K on Mac
         if ((event.ctrlKey || event.metaKey) && event.keyCode === 75) {
@@ -121,47 +128,51 @@
 
       const textarea = document.querySelector('textarea');
 
-	  if (textarea.getAttribute('listener-injected') !== 'true') {
-			textarea.setAttribute('listener-injected', 'true');
-			textarea.addEventListener('keydown', function (event) {
+    if (textarea.getAttribute('listener-injected') !== 'true') {
+      textarea.setAttribute('listener-injected', 'true');
+      textarea.addEventListener('keydown', function (event) {
 
-			// CTRL+UP or CMD+UP to navigate through user previous prompts
-			if ((event.ctrlKey || event.metaKey) && (event.key === 'ArrowUp')) {
-			
-			  const chatContainer = document.querySelector('div.flex.flex-col.items-center.text-sm.dark\\:bg-gray-800');
-			  const chatbubbles = chatContainer.querySelectorAll('.flex .flex-grow .flex-col');
-				
-			  if (chatbubbles.length > 0) {
-					let lastSetIndex = chatContainer.getAttribute('last-set-index') ?? chatbubbles.length;
-					
-					if (event.key === 'ArrowUp') {
-						lastSetIndex-=2;
-						
-						if (lastSetIndex < 0) {
-						  lastSetIndex = chatbubbles.length-2;
-						}
-					}
-					
-					const lastChatBubble = chatbubbles[lastSetIndex];
-					var text = lastChatBubble.innerText
+      // CTRL+UP or CMD+UP to navigate through user previous prompts
+      if ((event.ctrlKey || event.metaKey) && (event.key === 'ArrowUp')) {
+      
+        const chatContainer = document.querySelector('.h-full.dark\\:bg-gray-800');
+        if (chatContainer===null) {
+          return;
+        }
 
-					text = text.replace('\n\nCopy to Clipboard','');
-					textarea.value = text;
-					
-					// Expand the textarea if prompt is multiline otherwise keeps default size
-					if (text.includes('\n')) {
-						textarea.setAttribute('style','max-height: 200px; height: 264px;');
-					} else {
-						textarea.setAttribute('style', 'max-height: 200px; height: 24px; overflow-y: hidden;');
-					}
-					
-					chatContainer.setAttribute('last-set-index', lastSetIndex);
-				}
-			}
-		  });
-	  }
-	}
-	
+        const chatbubbles = chatContainer.querySelectorAll('.flex .flex-grow .flex-col');
+        
+        if (chatbubbles.length > 0) {
+          let lastSetIndex = chatContainer.getAttribute('last-set-index') ?? chatbubbles.length;
+          
+          if (event.key === 'ArrowUp') {
+            lastSetIndex-=2;
+            
+            if (lastSetIndex < 0) {
+              lastSetIndex = chatbubbles.length-2;
+            }
+          }
+          
+          const lastChatBubble = chatbubbles[lastSetIndex];
+          var text = lastChatBubble.innerText
+
+          text = text.replace('\n\nCopy to Clipboard','');
+          textarea.value = text;
+          
+          // Expand the textarea if prompt is multiline otherwise keeps default size
+          if (text.includes('\n')) {
+            textarea.setAttribute('style','max-height: 200px; height: 264px;');
+          } else {
+            textarea.setAttribute('style', 'max-height: 200px; height: 24px; overflow-y: hidden;');
+          }
+          
+          chatContainer.setAttribute('last-set-index', lastSetIndex);
+        }
+      }
+      });
+    }
+  }
+  
   }, 1000);
 
 })();
