@@ -3,12 +3,12 @@
   const currentYear = new Date().getFullYear()
   console.log(`
   - Copy Button: Enabled ✅
-  - CMD+K Hotkey: Enabled ✅
-  - Up Arrow Key: Enabled ✅
+  - CTRL/CMD+K Hotkey: Enabled ✅
+  - CTRL/CMD+Up/Down Arrow Key: Enabled ✅
   - ✨ AI plagiarism checker: Enabled ✅
 
   Copyright (c) ${currentYear} Sethu Senthil / Daniel Liedke
-  Version: 0.4.0
+  Version: 0.4.1
   https://copygpt.sethusenthil.com
   https://sethusenthil.com
   `)
@@ -58,6 +58,7 @@
 
 
   const intervalId = window.setInterval(async function () {
+
     if (!document.querySelector('#copygpt-credits')) {
         var textCenterElement = document.querySelector('.text-center');
         if (textCenterElement == null) {
@@ -68,6 +69,15 @@
       }
     }
 
+    // Find element with class h-4 w-4 mr-1
+    const sendMessageButton = document.querySelector('.h-4.w-4.mr-1');
+  
+    // If sendMessageButton is not found return
+    if (sendMessageButton === null) {
+      return;
+    }       
+
+    // If chat container is not found return
     const chatContainer = document.querySelector('.h-full.dark\\:bg-gray-800');
     if (chatContainer===null) {
       return;
@@ -81,22 +91,22 @@
       copyUserPromptToClipboard = true;
       }
     });
-
+          
     chatbubbles.forEach((chatbox, i) => {
     {
         var text;
       
         if (chatbox.parentElement.querySelector('.copy-to-clipboard') === null && (!(!copyUserPromptToClipboard && i % 2 === 0))) {
 
-          chatbox.insertAdjacentHTML('afterend', `<div style="display: flex; align-items: center; color: lightslategray;" class="copy-to-clipboard">
-          <p>Copy to Clipboard</p> <img src="https://copygpt.sethusenthil.com/cdn/clipboard-emoji.webp" alt="clipboard emoji" class="emoji"/>
-          </div>`);
-          chatbox.parentElement.querySelector('.copy-to-clipboard').addEventListener('click', function () {
-      
-                text = chatbox.innerText;
-                copyToClipboard(text);
+            chatbox.insertAdjacentHTML('afterend', `<div style="display: flex; align-items: center; color: lightslategray;" class="copy-to-clipboard">
+            <p>Copy to Clipboard</p> <img src="https://copygpt.sethusenthil.com/cdn/clipboard-emoji.webp" alt="clipboard emoji" class="emoji"/>
+            </div>`);
+            chatbox.parentElement.querySelector('.copy-to-clipboard').addEventListener('click', function () {
+        
+                  text = chatbox.innerText;
+                  copyToClipboard(text);
 
-              });
+                });
             }
           }
     });
@@ -128,12 +138,12 @@
 
       const textarea = document.querySelector('textarea');
 
-    if (textarea.getAttribute('listener-injected') !== 'true') {
+    if (textarea!==null && textarea.getAttribute('listener-injected') !== 'true') {
       textarea.setAttribute('listener-injected', 'true');
       textarea.addEventListener('keydown', function (event) {
 
       // CTRL+UP or CMD+UP to navigate through user previous prompts
-      if ((event.ctrlKey || event.metaKey) && (event.key === 'ArrowUp')) {
+      if ((event.ctrlKey || event.metaKey) && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
       
         const chatContainer = document.querySelector('.h-full.dark\\:bg-gray-800');
         if (chatContainer===null) {
@@ -143,16 +153,25 @@
         const chatbubbles = chatContainer.querySelectorAll('.flex .flex-grow .flex-col');
         
         if (chatbubbles.length > 0) {
-          let lastSetIndex = chatContainer.getAttribute('last-set-index') ?? chatbubbles.length;
           
+          let lastSetIndex = +chatContainer.getAttribute('last-set-index') ?? chatbubbles.length;
+                    
           if (event.key === 'ArrowUp') {
-            lastSetIndex-=2;
+            lastSetIndex = lastSetIndex -2;
             
             if (lastSetIndex < 0) {
               lastSetIndex = chatbubbles.length-2;
             }
           }
           
+          if (event.key === 'ArrowDown') {
+            lastSetIndex = lastSetIndex + 2;
+            
+            if (lastSetIndex >= chatbubbles.length) {
+              lastSetIndex = 0;
+            }
+          }
+
           const lastChatBubble = chatbubbles[lastSetIndex];
           var text = lastChatBubble.innerText
 
@@ -173,6 +192,6 @@
     }
   }
   
-  }, 1000);
+  }, 2000);
 
 })();
