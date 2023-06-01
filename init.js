@@ -69,8 +69,8 @@
       }
     }
 
-    // Find element with class h-4 w-4 mr-1
-    const sendMessageButton = document.querySelector('.h-4.w-4.mr-1');
+    // Find send message button element with class .h-4.w-4.m-1.md\\:m-0
+    const sendMessageButton = document.querySelector('.h-4.w-4.m-1.md\\:m-0');
   
     // If sendMessageButton is not found return
     if (sendMessageButton === null) {
@@ -78,7 +78,7 @@
     }       
 
     // If chat container is not found return
-    const chatContainer = document.querySelector('.h-full.dark\\:bg-gray-800');
+    const chatContainer = document.querySelector('.dark\\:bg-gray-800');
     if (chatContainer===null) {
       return;
     }
@@ -114,7 +114,7 @@
     if (chatContainer.getAttribute('listener-injected') !== 'true') {
 
       document.addEventListener('keydown', function (event) {
-        const chatContainer = document.querySelector('.h-full.dark\\:bg-gray-800');
+        const chatContainer = document.querySelector('.dark\\:bg-gray-800');
         if (chatContainer===null) {
           return;
         }
@@ -145,7 +145,7 @@
       // CTRL+UP or CMD+UP to navigate through user previous prompts
       if ((event.ctrlKey || event.metaKey) && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
       
-        const chatContainer = document.querySelector('.h-full.dark\\:bg-gray-800');
+        const chatContainer = document.querySelector('.dark\\:bg-gray-800');
         if (chatContainer===null) {
           return;
         }
