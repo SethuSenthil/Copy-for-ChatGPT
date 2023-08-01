@@ -10,7 +10,7 @@
         "128": "media/128.png"
     },
     "description": "This extension allows you to copy chat GPT responses with a click of a button or CMD+K and runs it through plagiarism detectors",
-    "version": "0.3.10",
+    "version": "0.3.11",
     "host_permissions": [
         "https://writer.com/*"
     ],

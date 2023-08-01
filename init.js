@@ -9,7 +9,7 @@
   - ✨ AI plagiarism checker: Enabled ✅
 
   Copyright (c) ${currentYear} Sethu Senthil
-  Version: 0.3.10
+  Version: 0.3.11
   https://copygpt.sethusenthil.com
   https://sethusenthil.com
   `)
@@ -114,7 +114,7 @@
       if ((i > 0 && (i % 2 === 0) && plusUser) ||
         ((i + 1) % 2 === 0 && !plusUser)) {
         //it is a chat box from bot
-        const addAfter = chatbox.querySelector(CHAT_TEXT_SELECTOR);
+        const addAfter = chatbox.querySelector(CHAT_TEXT_SELECTOR).parentElement;
 
         if (chatbox.querySelector(`.${CLIPBOARD_CLASS_NAME}`) === null) {
 
