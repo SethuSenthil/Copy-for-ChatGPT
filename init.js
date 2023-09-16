@@ -8,12 +8,17 @@
   - ✨ AI plagiarism checker: Enabled ✅
 
   Copyright (c) ${currentYear} Sethu Senthil / Daniel Liedke
-  Version: 0.4.1
+  Version: 0.5.0
   https://copygpt.sethusenthil.com
   https://sethusenthil.com
   `)
 
+  const CHAT_CONTAINER_SELECTOR = '.flex.flex-col.text-sm.dark\\:bg-gray-800';
+  const CHAT_BUBLES_SELECTOR = '.flex.flex-grow.flex-col.gap-3.max-w-full';
   const CHAT_TEXT_SELECTOR = '.markdown';
+  const CHAT_USER_MESSAGE_SELECTOR = '#prompt-textarea';
+  const CHAT_SEND_MESSAGE_BUTTON_SELECTOR = '.icon-sm.m-1.md\\:m-0';
+  
   var copyUserPromptToClipboard = false;
 
   const showSnackbar = (message, position) => {
@@ -69,8 +74,8 @@
       }
     }
 
-    // Find send message button element with class .h-4.w-4.m-1.md\\:m-0
-    const sendMessageButton = document.querySelector('.h-4.w-4.m-1.md\\:m-0');
+    // Find send message button element with class .icon-sm.m-1.md\\:m-0
+    const sendMessageButton = document.querySelector(CHAT_SEND_MESSAGE_BUTTON_SELECTOR);
   
     // If sendMessageButton is not found return
     if (sendMessageButton === null) {
@@ -78,12 +83,12 @@
     }       
 
     // If chat container is not found return
-    const chatContainer = document.querySelector('.dark\\:bg-gray-800');
+    const chatContainer = document.querySelector(CHAT_CONTAINER_SELECTOR);
     if (chatContainer===null) {
       return;
     }
 
-    const chatbubbles = chatContainer.querySelectorAll('.flex .flex-grow .flex-col');
+    const chatbubbles = document.querySelectorAll(CHAT_BUBLES_SELECTOR);
     
     //check if copyUserPromptToClipboard is enabled
     chrome.storage.sync.get('copyUserPromptToClipboard', function(settings) {
@@ -114,7 +119,7 @@
     if (chatContainer.getAttribute('listener-injected') !== 'true') {
 
       document.addEventListener('keydown', function (event) {
-        const chatContainer = document.querySelector('.dark\\:bg-gray-800');
+        const chatContainer = document.querySelector(CHAT_CONTAINER_SELECTOR);
         if (chatContainer===null) {
           return;
         }
@@ -122,7 +127,7 @@
         // check for CTRL+K on Windows or CMD+K on Mac
         if ((event.ctrlKey || event.metaKey) && event.keyCode === 75) {
 
-          const chatbubbles = chatContainer.querySelectorAll('.flex .flex-grow .flex-col');
+          const chatbubbles = document.querySelectorAll(CHAT_BUBLES_SELECTOR);
 
           if (chatbubbles.length % 2 === 0) {
 
@@ -136,7 +141,7 @@
         chatContainer.setAttribute('listener-injected', 'true');
       });
 
-      const textarea = document.querySelector('textarea');
+    const textarea = document.querySelector(CHAT_USER_MESSAGE_SELECTOR);
 
     if (textarea!==null && textarea.getAttribute('listener-injected') !== 'true') {
       textarea.setAttribute('listener-injected', 'true');
@@ -145,12 +150,12 @@
       // CTRL+UP or CMD+UP to navigate through user previous prompts
       if ((event.ctrlKey || event.metaKey) && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
       
-        const chatContainer = document.querySelector('.dark\\:bg-gray-800');
+        const chatContainer = document.querySelector(CHAT_CONTAINER_SELECTOR);
         if (chatContainer===null) {
           return;
         }
 
-        const chatbubbles = chatContainer.querySelectorAll('.flex .flex-grow .flex-col');
+        const chatbubbles = document.querySelectorAll(CHAT_BUBLES_SELECTOR);
         
         if (chatbubbles.length > 0) {
           
